@@ -199,6 +199,17 @@ class ApiClient {
     return response;
   }
 
+  async getGoogleAuthUrl(): Promise<{ url: string } | null> {
+    const response = await this.request<{ url: string }>('/auth/google/url', { skipAuth: true });
+    return response;
+  }
+
+  async handleOAuthCallback(accessToken: string, refreshToken: string): Promise<{ user: User; tokens: { accessToken: string; refreshToken: string } }> {
+    this.saveTokens(accessToken, refreshToken);
+    const user = await this.getMe();
+    return { user, tokens: { accessToken, refreshToken } };
+  }
+
   async logout(): Promise<void> {
     try {
       await this.request('/auth/logout', { method: 'POST' });

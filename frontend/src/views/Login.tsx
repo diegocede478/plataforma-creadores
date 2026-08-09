@@ -22,7 +22,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export function Login() {
   const navigate = useNavigate();
-  const { login, isLoading: authLoading } = useAuth();
+  const { login, loginWithGoogle, isLoading: authLoading } = useAuth();
   const { addToast } = useToastStore();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -163,6 +163,7 @@ export function Login() {
                 className="auth-page__social-btn"
                 disabled={isLoading}
                 aria-label="Continuar con Google"
+                onClick={loginWithGoogle}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path

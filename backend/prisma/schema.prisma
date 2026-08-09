@@ -24,6 +24,7 @@ model User {
   role          String   @default("FAN") // CREATOR or FAN
   avatar        String?
   bio           String?
+  googleId      String?  @unique
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

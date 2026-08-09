@@ -32,7 +32,7 @@ export const registerUser = async (
       email,
       username,
       passwordHash,
-      role
+      role: role.toUpperCase() as Role
     },
     select: {
       id: true,
@@ -55,6 +55,70 @@ export const registerUser = async (
   const tokens = generateTokens(user.id, user.email, user.role);
 
   return { user, tokens };
+};
+
+export const findOrCreateGoogleUser = async (profile: any) => {
+  const email = profile.emails?.[0]?.value;
+  const googleId = profile.id;
+  const displayName = profile.displayName;
+  const avatar = profile.photos?.[0]?.value;
+
+  if (!email) {
+    throw new Error('No email provided by Google');
+  }
+
+  // Buscar usuario existente por email o googleId
+  let user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email }, { googleId }],
+    },
+  });
+
+  if (user) {
+    // Actualizar googleId y avatar si no los tiene
+    if (!user.googleId || !user.avatar) {
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          googleId,
+          ...(avatar && !user.avatar && { avatar }),
+        },
+      });
+    }
+    return user;
+  }
+
+  // Crear nuevo usuario
+  const baseUsername = displayName?.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '') || 'user';
+  let username = baseUsername;
+  let counter = 1;
+
+  // Asegurar username único
+  while (await prisma.user.findUnique({ where: { username } })) {
+    username = `${baseUsername}_${counter}`;
+    counter++;
+  }
+
+  user = await prisma.user.create({
+    data: {
+      email,
+      username,
+      passwordHash: '', // No password for OAuth users
+      role: 'FAN',
+      googleId,
+      avatar,
+    },
+  });
+
+  // Crear wallet para el nuevo usuario
+  await prisma.wallet.create({
+    data: {
+      userId: user.id,
+      balance: 0,
+    },
+  });
+
+  return user;
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -145,23 +209,23 @@ export const changePassword = async (userId: string, currentPassword: string, ne
 };
 
 interface JwtPayload {
-  userId: string;
+  id: string;
   email: string;
   role: string;
   type?: 'access' | 'refresh';
 }
 
 const generateAccessToken = (userId: string, email: string, role: string): string => {
-  const payload: JwtPayload = { userId, email, role, type: 'access' };
+  const payload: JwtPayload = { id: userId, email, role, type: 'access' };
   return jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN });
 };
 
 const generateRefreshToken = (userId: string, email: string, role: string): string => {
-  const payload: JwtPayload = { userId, email, role, type: 'refresh' };
+  const payload: JwtPayload = { id: userId, email, role, type: 'refresh' };
   return jwt.sign(payload, env.JWT_SECRET, { expiresIn: '30d' });
 };
 
-const generateTokens = (userId: string, email: string, role: string) => ({
+export const generateTokens = (userId: string, email: string, role: string) => ({
   accessToken: generateAccessToken(userId, email, role),
   refreshToken: generateRefreshToken(userId, email, role)
 });
@@ -183,7 +247,7 @@ export const refreshTokens = async (refreshToken: string) => {
   }
 
   const user = await prisma.user.findUnique({
-    where: { id: payload.userId },
+    where: { id: payload.id },
     select: { id: true, email: true, role: true }
   });
 

@@ -47,7 +47,7 @@ const passwordRequirements = [
 
 export function Register() {
   const navigate = useNavigate();
-  const { register: registerUser, isLoading: authLoading } = useAuth();
+  const { register: registerUser, loginWithGoogle, isLoading: authLoading } = useAuth();
   const { addToast } = useToastStore();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -72,7 +72,7 @@ export function Register() {
         email: data.email,
         password: data.password,
         username: data.username,
-        role: data.role,
+        role: data.role.toUpperCase(),
       });
       addToast({
         type: 'success',
@@ -327,6 +327,7 @@ export function Register() {
                 className="auth-page__social-btn"
                 disabled={isLoading}
                 aria-label="Registrarse con Google"
+                onClick={loginWithGoogle}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path

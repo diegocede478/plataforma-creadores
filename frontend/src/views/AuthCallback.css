@@ -1,0 +1,169 @@
+/* ========================================
+   Creata - Auth Callback Styles
+   ======================================== */
+
+.auth-callback {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-callback__background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-callback__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: orb-float 20s ease-in-out infinite;
+}
+
+.auth-callback__orb--1 {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  right: -100px;
+  background: var(--color-primary);
+  animation-delay: 0s;
+}
+
+.auth-callback__orb--2 {
+  width: 300px;
+  height: 300px;
+  bottom: -50px;
+  left: -50px;
+  background: var(--color-secondary);
+  animation-delay: -7s;
+}
+
+.auth-callback__orb--3 {
+  width: 250px;
+  height: 250px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-accent);
+  animation-delay: -14s;
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -30px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(-30px, 10px) scale(1.02); }
+}
+
+.auth-callback__main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: var(--space-6);
+}
+
+.auth-callback__container {
+  width: 100%;
+}
+
+.auth-callback__card {
+  width: 100%;
+  text-align: center;
+}
+
+.auth-callback__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.auth-callback__spinner {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-callback__loader {
+  width: 48px;
+  height: 48px;
+  color: var(--color-primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.auth-callback__success-icon,
+.auth-callback__error-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-callback__success-check {
+  width: 64px;
+  height: 64px;
+  color: var(--color-success);
+  animation: check-pop 0.5s ease-out;
+}
+
+.auth-callback__error-alert {
+  width: 64px;
+  height: 64px;
+  color: var(--color-error);
+  animation: shake 0.5s ease-out;
+}
+
+@keyframes check-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.auth-callback__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.auth-callback__subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.auth-callback__error-message {
+  color: var(--color-error);
+  font-weight: 500;
+}
+
+.auth-callback__retry-link {
+  display: inline-block;
+  margin-top: var(--space-4);
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.auth-callback__retry-link:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}

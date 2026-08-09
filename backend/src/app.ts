@@ -4,6 +4,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import session from 'express-session';
+import passport from 'passport';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import postRoutes from './routes/post.routes';
@@ -13,6 +15,9 @@ import orderRoutes from './routes/order.routes';
 import messageRoutes from './routes/message.routes';
 import walletRoutes from './routes/wallet.routes';
 import { errorHandler } from './middlewares/errorHandler';
+
+// Inicializar passport strategies
+import './services/oauth.service';
 
 const app = express();
 
@@ -26,6 +31,18 @@ app.use(cors({
 }));
 app.use(morgan('dev'));
 app.use(express.json());
+
+// Session para passport
+app.use(session({
+  secret: process.env.JWT_SECRET || 'fallback_secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 }
+}));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.get('/api/health', (_req, res) => {

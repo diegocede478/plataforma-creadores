@@ -11,6 +11,7 @@ import type { User, Post, Service, Subscription, Order, Message, Wallet, Transac
 // Auth hooks
 export function useAuth() {
   const { user, tokens, isAuthenticated, isLoading, setAuth, setUser, logout, setLoading } = useAuthStore();
+  const { addToast } = useToastStore();
 
   const login = useCallback(async (email: string, password: string) => {
     setLoading(true);
@@ -27,6 +28,31 @@ export function useAuth() {
     setLoading(true);
     try {
       const response = await api.register(data);
+      setAuth(response.user, response.tokens);
+      return response;
+    } finally {
+      setLoading(false);
+    }
+  }, [setAuth, setLoading]);
+
+  const loginWithGoogle = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await api.getGoogleAuthUrl();
+      if (response?.url) {
+        window.location.href = response.url;
+      } else {
+        addToast({ type: 'error', title: 'Error', message: 'Google OAuth no está configurado' });
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [setLoading]);
+
+  const handleOAuthCallback = useCallback(async (accessToken: string, refreshToken: string) => {
+    setLoading(true);
+    try {
+      const response = await api.handleOAuthCallback(accessToken, refreshToken);
       setAuth(response.user, response.tokens);
       return response;
     } finally {
@@ -61,6 +87,8 @@ export function useAuth() {
     isLoading,
     login,
     register,
+    loginWithGoogle,
+    handleOAuthCallback,
     logout: handleLogout,
     refreshUser,
   };

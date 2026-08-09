@@ -10,6 +10,8 @@ export interface JwtPayload {
 
 declare global {
   namespace Express {
+    // Extend the passport User interface with our JWT payload
+    interface User extends JwtPayload {}
     interface Request {
       user?: JwtPayload;
     }

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import * as authController from '../controllers/auth.controller';
 import { authenticate } from '../middlewares/auth';
 import { validateRequest } from '../middlewares/validateRequest';
+import passport from 'passport';
 
 const router = Router();
 
@@ -41,5 +42,14 @@ router.post('/logout', authController.logout);
 router.post('/refresh', validateRequest(refreshSchema), authController.refresh);
 router.post('/change-password', authenticate, validateRequest(changePasswordSchema), authController.changePassword);
 router.get('/me', authenticate, authController.getMe);
+
+// Google OAuth routes
+router.get('/google/url', authController.googleAuthUrl);
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login?error=google_auth_failed', session: false }),
+  authController.googleCallback
+);
 
 export default router;

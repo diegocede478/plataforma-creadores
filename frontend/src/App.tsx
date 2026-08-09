@@ -16,6 +16,7 @@ const CreatorsDirectory = lazy(() => import('./views/CreatorsDirectory').then((m
 const Feed = lazy(() => import('./views/Feed').then((m) => ({ default: m.Feed })));
 const Login = lazy(() => import('./views/Login').then((m) => ({ default: m.Login })));
 const Register = lazy(() => import('./views/Register').then((m) => ({ default: m.Register })));
+const AuthCallback = lazy(() => import('./views/AuthCallback').then((m) => ({ default: m.AuthCallback })));
 const CreatorProfile = lazy(() => import('./views/CreatorProfile').then((m) => ({ default: m.CreatorProfile })));
 const DashboardOverview = lazy(() => import('./views/DashboardOverview').then((m) => ({ default: m.DashboardOverview })));
 const PostsManager = lazy(() => import('./views/PostsManager').then((m) => ({ default: m.PostsManager })));
@@ -92,6 +93,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>
+            <Route path="/auth/callback" element={<AuthCallback />} />
           </Route>
 
           {/* Private routes — todas con el sidebar del DashboardLayout */}
