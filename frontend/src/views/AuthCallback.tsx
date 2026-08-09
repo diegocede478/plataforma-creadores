@@ -3,7 +3,7 @@
    Maneja el callback de Google OAuth
    ======================================== */
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAuth } from '../hooks';
@@ -61,7 +61,7 @@ export function AuthCallback() {
 
         <main className="auth-callback__main">
           <div className="auth-callback__container">
-            <Card variant="glass" padding="xl" className="auth-callback__card">
+            <Card variant="glass" padding="lg" className="auth-callback__card">
               <div className="auth-callback__content">
                 <div className="auth-callback__spinner">
                   <Loader2 className="auth-callback__loader" aria-hidden="true" />
@@ -87,7 +87,7 @@ export function AuthCallback() {
 
         <main className="auth-callback__main">
           <div className="auth-callback__container">
-            <Card variant="glass" padding="xl" className="auth-callback__card">
+            <Card variant="glass" padding="lg" className="auth-callback__card">
               <div className="auth-callback__content">
                 <div className="auth-callback__success-icon">
                   <CheckCircle className="auth-callback__success-check" aria-hidden="true" />
@@ -112,7 +112,7 @@ export function AuthCallback() {
 
       <main className="auth-callback__main">
         <div className="auth-callback__container">
-          <Card variant="glass" padding="xl" className="auth-callback__card">
+          <Card variant="glass" padding="lg" className="auth-callback__card">
             <div className="auth-callback__content">
               <div className="auth-callback__error-icon">
                 <AlertCircle className="auth-callback__error-alert" aria-hidden="true" />
@@ -128,5 +128,3 @@ export function AuthCallback() {
     </div>
   );
 }
-
-import { useState } from 'react';

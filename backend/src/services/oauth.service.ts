@@ -2,7 +2,6 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import prisma from '../utils/prisma';
 import { env } from '../utils/env';
-import { generateTokens } from './auth.service';
 
 passport.serializeUser((user: any, done) => {
   done(null, user.id);
@@ -11,7 +10,7 @@ passport.serializeUser((user: any, done) => {
 passport.deserializeUser(async (id: string, done) => {
   try {
     const user = await prisma.user.findUnique({ where: { id } });
-    done(null, user);
+    done(null, user as any);
   } catch (error) {
     done(error, null);
   }
@@ -26,7 +25,7 @@ if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && env.GOOGLE_CALLBACK_URL)
         callbackURL: env.GOOGLE_CALLBACK_URL,
         scope: ['profile', 'email'],
       },
-      async (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+      async (_accessToken: string, _refreshToken: string, profile: any, done: Function) => {
         try {
           const email = profile.emails?.[0]?.value;
           const googleId = profile.id;

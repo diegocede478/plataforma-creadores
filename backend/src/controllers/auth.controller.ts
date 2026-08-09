@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import * as authService from '../services/auth.service';
+import { generateTokens } from '../services/auth.service';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -88,5 +89,51 @@ export const getMe = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Error al obtener usuario';
     res.status(400).json({ error: message });
+  }
+};
+
+export const googleAuth = (_req: Request, _res: Response): void => {
+  // Este endpoint redirige a Google OAuth
+  // Passport manejará la redirección automáticamente
+};
+
+export const googleCallback = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // req.user viene de passport.deserializeUser
+    const user = req.user as any;
+
+    if (!user) {
+      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=oauth_failed`);
+      return;
+    }
+
+    const tokens = generateTokens(user.id, user.email, user.role);
+
+    // Redirigir al frontend con tokens en query params (o usar cookies)
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendUrl}/auth/callback?accessToken=${tokens.accessToken}&refreshToken=${tokens.refreshToken}`;
+
+    res.redirect(redirectUrl);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Error en autenticación Google';
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/login?error=${encodeURIComponent(message)}`);
+  }
+};
+
+export const googleAuthUrl = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const { getGoogleAuthUrl } = await import('../services/oauth.service');
+    const url = getGoogleAuthUrl();
+
+    if (!url) {
+      res.status(503).json({ error: 'Google OAuth no configurado' });
+      return;
+    }
+
+    res.json({ url });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Error al generar URL de Google';
+    res.status(500).json({ error: message });
   }
 };
