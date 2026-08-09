@@ -78,7 +78,9 @@ class ApiClient {
   }
 
   private buildUrl(endpoint: string, params?: Record<string, string | number | boolean | undefined>): string {
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    // `baseUrl` puede ser relativa ('/api') en producción; el constructor de URL
+    // exige una base absoluta, así que resolvemos contra el origen actual.
+    const url = new URL(`${this.baseUrl}${endpoint}`, window.location.origin);
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
