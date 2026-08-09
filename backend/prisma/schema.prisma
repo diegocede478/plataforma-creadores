@@ -1,0 +1,170 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// USER & AUTHENTICATION
+// ─────────────────────────────────────────────────────────────
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  username      String   @unique
+  passwordHash  String
+  role          String   @default("FAN") // CREATOR or FAN
+  avatar        String?
+  bio           String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  posts           Post[]
+  services        Service[]
+  subscriptions   Subscription[]  @relation("UserSubscriptions")
+  subscribers     Subscription[]  @relation("UserSubscribers")
+  sentMessages    Message[]       @relation("MessageSender")
+  receivedMessages Message[]      @relation("MessageReceiver")
+  wallet          Wallet?
+  ordersAsFan     Order[]         @relation("OrderFan")
+  ordersAsCreator Order[]         @relation("OrderCreator")
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────────────────────
+// POSTS (OnlyFans-style content)
+// ─────────────────────────────────────────────────────────────
+
+model Post {
+  id          String   @id @default(cuid())
+  creatorId   String
+  content     String
+  mediaUrl    String?
+  isPremium   Boolean  @default(false)
+  price       Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  creator     User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
+}
+
+// ─────────────────────────────────────────────────────────────
+// SERVICES / GIGS (Fiverr-style offerings)
+// ─────────────────────────────────────────────────────────────
+
+model Service {
+  id            String   @id @default(cuid())
+  creatorId     String
+  title         String
+  description   String
+  price         Float
+  deliveryDays  Int
+  status        String   @default("ACTIVE") // ACTIVE, PAUSED, DELETED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  creator       User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  orders        Order[]
+
+  @@map("services")
+}
+
+// ─────────────────────────────────────────────────────────────
+// ORDERS (Gig purchases)
+// ─────────────────────────────────────────────────────────────
+
+model Order {
+  id          String   @id @default(cuid())
+  serviceId   String
+  fanId       String
+  creatorId   String
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED, CANCELLED
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  fan         User     @relation("OrderFan", fields: [fanId], references: [id], onDelete: Cascade)
+  creator     User     @relation("OrderCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@map("orders")
+}
+
+// ─────────────────────────────────────────────────────────────
+// SUBSCRIPTIONS
+// ─────────────────────────────────────────────────────────────
+
+model Subscription {
+  id        String   @id @default(cuid())
+  fanId     String
+  creatorId String
+  status    String   @default("ACTIVE") // ACTIVE, CANCELLED, EXPIRED
+  startedAt DateTime @default(now())
+  expiresAt DateTime
+
+  fan       User     @relation("UserSubscriptions", fields: [fanId], references: [id], onDelete: Cascade)
+  creator   User     @relation("UserSubscribers", fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@unique([fanId, creatorId])
+  @@map("subscriptions")
+}
+
+// ─────────────────────────────────────────────────────────────
+// MESSAGES (Chat between users)
+// ─────────────────────────────────────────────────────────────
+
+model Message {
+  id           String   @id @default(cuid())
+  senderId     String
+  receiverId   String
+  content      String
+  isPaid       Boolean  @default(false)
+  price        Float?
+  isUnlocked   Boolean  @default(false)
+  isRead       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  sender       User     @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver     User     @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+// ─────────────────────────────────────────────────────────────
+// WALLET & TRANSACTIONS
+// ─────────────────────────────────────────────────────────────
+
+model Wallet {
+  id        String        @id @default(cuid())
+  userId    String        @unique
+  balance   Float         @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("wallets")
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  walletId    String
+  type        String   // DEPOSIT, WITHDRAWAL, SUBSCRIPTION, TIP, SERVICE_PURCHASE, SERVICE_PAYMENT
+  amount      Float
+  referenceId String?
+  createdAt   DateTime @default(now())
+
+  wallet      Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
+}

@@ -1,0 +1,158 @@
+/* ========================================
+   Creata - Input Styles
+   ======================================== */
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.input-wrapper--full {
+  width: 100%;
+}
+
+.input__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.input__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover:not(:disabled):not(.input--error) {
+  border-color: var(--border-secondary);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.2);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-tertiary);
+}
+
+.input--error {
+  border-color: var(--color-error);
+}
+
+.input--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* Icons */
+.input__icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input__icon--left {
+  left: var(--space-3);
+}
+
+.input__icon--right {
+  right: var(--space-3);
+}
+
+.input__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Adjust padding when icons present */
+.input:has(+ .input__icon--left) {
+  padding-left: 44px;
+}
+
+.input:has(+ .input__icon--right) {
+  padding-right: 44px;
+}
+
+/* Textarea */
+.input__container--textarea {
+  min-height: 120px;
+}
+
+.input--textarea {
+  height: auto;
+  min-height: 120px;
+  padding: var(--space-3) var(--space-4);
+  resize: vertical;
+  line-height: var(--line-height-relaxed);
+}
+
+/* Select */
+.input--select {
+  appearance: none;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.input__chevron {
+  position: absolute;
+  right: var(--space-3);
+  width: 20px;
+  height: 20px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+/* Error & Hint */
+.input__error {
+  font-size: var(--font-size-sm);
+  color: var(--color-error-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.input__error::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.input__hint {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+/* Floating label effect (optional) */
+.input-wrapper:has(.input:focus) .input__label,
+.input-wrapper:has(.input:not(:placeholder-shown)) .input__label {
+  color: var(--text-primary);
+}

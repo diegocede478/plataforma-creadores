@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Bases de datos locales (SQLite / SQLite-journal)
+*.db
+*.db-journal
+*.sqlite
+
+# Variables de entorno — NUNCA subir secretos (mantener .env.example)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editor y SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/

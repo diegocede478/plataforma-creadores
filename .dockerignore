@@ -1,0 +1,19 @@
+# Dependencias y builds
+**/node_modules
+**/dist
+**/build
+
+# Bases de datos locales
+**/*.db
+**/*.db-journal
+
+# Variables de entorno (nunca al contenedor)
+**/.env
+**/.env.*
+
+# Git y editor
+.git
+.gitignore
+**/*.md
+Dockerfile
+.dockerignore

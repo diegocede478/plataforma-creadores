@@ -1,0 +1,229 @@
+/* ========================================
+   Creata - Post Card Styles
+   ======================================== */
+
+/* Post Card */
+.post-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.post-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.post-card__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.post-card__username {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.post-card__date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.post-card__content {
+  padding: var(--space-lg);
+}
+
+.post-card__content--locked {
+  position: relative;
+}
+
+.post-card__blur {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.post-card__preview {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.post-card__lock-overlay {
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  right: var(--space-lg);
+  bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  background: rgba(var(--bg-primary-rgb), 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+  pointer-events: auto;
+}
+
+.post-card__lock-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--accent-primary);
+}
+
+.post-card__lock-overlay p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: var(--text-base);
+}
+
+.post-card__text {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}
+
+.post-card__media {
+  margin-top: var(--space-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.post-card__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.post-card__actions {
+  display: flex;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--border-primary);
+}
+
+.post-card__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.post-card__action:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.post-card__action:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Unlock Modal */
+.unlock-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+
+.unlock-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.unlock-modal__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.unlock-modal__icon {
+  width: 64px;
+  height: 64px;
+  color: var(--accent-primary);
+}
+
+.unlock-modal__content h3 {
+  margin: 0;
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+}
+
+.unlock-modal__content p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.unlock-modal__actions {
+  display: flex;
+  gap: var(--space-sm);
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+.unlock-modal__actions .btn {
+  flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .post-card__header {
+    padding: var(--space-md);
+  }
+
+  .post-card__content {
+    padding: var(--space-md);
+  }
+
+  .post-card__lock-overlay {
+    padding: var(--space-md);
+  }
+
+  .unlock-modal__content {
+    padding: var(--space-lg);
+    margin: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .post-card__actions {
+    padding: var(--space-sm) var(--space-md);
+  }
+}

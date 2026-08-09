@@ -1,0 +1,115 @@
+/* ========================================
+   Creata - Error Boundary Styles
+   ======================================== */
+
+.error-boundary {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: var(--bg-primary);
+}
+
+.error-boundary__container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.error-boundary__card {
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.error-boundary__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-lg);
+  opacity: 0.8;
+}
+
+.error-boundary__icon--network {
+  color: var(--accent-warning);
+}
+
+.error-boundary__icon--chunk {
+  color: var(--accent-primary);
+}
+
+.error-boundary__icon--generic {
+  color: var(--accent-danger);
+}
+
+.error-boundary__title {
+  margin: 0 0 var(--space-md);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.error-boundary__message {
+  margin: 0 0 var(--space-xl);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.error-boundary__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.error-boundary__actions .btn {
+  width: 100%;
+}
+
+.error-boundary__details {
+  text-align: left;
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+}
+
+.error-boundary__details summary {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-sm);
+}
+
+.error-boundary__stack {
+  margin: 0;
+  padding: var(--space-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .error-boundary__card {
+    padding: var(--space-lg);
+  }
+
+  .error-boundary__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .error-boundary__title {
+    font-size: var(--text-xl);
+  }
+
+  .error-boundary__actions {
+    flex-direction: column;
+  }
+}

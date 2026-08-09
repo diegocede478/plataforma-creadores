@@ -1,0 +1,137 @@
+/* ========================================
+   Creata - Card Styles
+   ======================================== */
+
+.card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.card--hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.card--clickable {
+  cursor: pointer;
+}
+
+.card--clickable:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Variants */
+.card--default {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+}
+
+.card--glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.card--strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-shadow);
+}
+
+.card--gradient {
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.card--gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-primary);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Padding */
+.card--p-none {
+  padding: 0;
+}
+
+.card--p-sm {
+  padding: var(--space-3);
+}
+
+.card--p-md {
+  padding: var(--space-4);
+}
+
+.card--p-lg {
+  padding: var(--space-6);
+}
+
+/* Header */
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.card__header-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.card__header-action {
+  flex-shrink: 0;
+}
+
+/* Body */
+.card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Footer */
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-secondary);
+}
+
+.card__footer--divided {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-secondary);
+}
+
+/* Glass hover effects */
+.card--glass:hover,
+.card--strong:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
+}
+
+/* Gradient hover */
+.card--gradient:hover::before {
+  opacity: 1;
+}

@@ -1,0 +1,233 @@
+/* ========================================
+   Creata - Services Manager Styles
+   ======================================== */
+
+.services-manager {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* Header */
+.services-manager__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.services-manager__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.services-manager__subtitle {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  margin: var(--space-xs) 0 0;
+}
+
+/* Grid */
+.services-manager__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* Empty state */
+.services-manager__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  gap: var(--space-md);
+}
+
+.services-manager__empty-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+}
+
+.services-manager__empty h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+}
+
+.services-manager__empty p {
+  margin: 0;
+  color: var(--text-tertiary);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* Service Card */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: 100%;
+}
+
+.service-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.service-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.service-card__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--color-success);
+  font-weight: 700;
+  font-size: var(--text-lg);
+}
+
+.service-card__title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.service-card__description {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: var(--text-sm);
+  flex: 1;
+}
+
+.service-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.service-card__delivery {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+}
+
+.service-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-primary);
+}
+
+.service-card__actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.service-card__delete:hover {
+  color: var(--color-danger);
+}
+
+/* Form */
+.services-manager__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.services-manager__form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-md);
+}
+
+.services-manager__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.services-manager__form-hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.services-manager__form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-primary);
+}
+
+/* Delete confirm */
+.services-manager__confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.services-manager__confirm-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-danger);
+  background: var(--bg-danger, rgba(239, 68, 68, 0.12));
+}
+
+.services-manager__confirm-text {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.services-manager__confirm-actions {
+  display: flex;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.services-manager__confirm-actions .btn {
+  flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .services-manager__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-manager__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .services-manager__form-grid {
+    grid-template-columns: 1fr;
+  }
+}

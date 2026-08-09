@@ -1,0 +1,120 @@
+/* ========================================
+   Creata - Avatar Styles
+   ======================================== */
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--bg-active);
+  vertical-align: middle;
+}
+
+.avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar__fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-inverse);
+  font-size: 0.5em;
+  user-select: none;
+}
+
+/* Sizes */
+.avatar--xs { width: 24px; height: 24px; font-size: 10px; }
+.avatar--sm { width: 32px; height: 32px; font-size: 12px; }
+.avatar--md { width: 40px; height: 40px; font-size: 14px; }
+.avatar--lg { width: 56px; height: 56px; font-size: 18px; }
+.avatar--xl { width: 72px; height: 72px; font-size: 24px; }
+.avatar--2xl { width: 96px; height: 96px; font-size: 32px; }
+
+/* Shapes */
+.avatar--circle { border-radius: 50%; }
+.avatar--square { border-radius: var(--radius-md); }
+
+/* Border */
+.avatar--border {
+  box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--border-primary);
+}
+
+.avatar--circle.avatar--border {
+  box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--border-primary);
+}
+
+/* Status indicator */
+.avatar__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  height: 30%;
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+  background: var(--text-muted);
+}
+
+.avatar--circle .avatar__status {
+  border-radius: 50%;
+}
+
+.avatar--square .avatar__status {
+  border-radius: var(--radius-sm);
+}
+
+.avatar--status-online .avatar__status { background: var(--color-success); }
+.avatar--status-offline .avatar__status { background: var(--text-muted); }
+.avatar--status-busy .avatar__status { background: var(--color-error); }
+.avatar--status-away .avatar__status { background: var(--color-warning); }
+
+/* Avatar Group */
+.avatar-group {
+  display: inline-flex;
+}
+
+.avatar-group__stack {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-group__item {
+  margin-left: -12px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.avatar-group__item:first-child {
+  margin-left: 0;
+}
+
+.avatar-group__item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  z-index: 10 !important;
+}
+
+.avatar-group__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  margin-left: -12px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--bg-primary);
+  color: var(--text-tertiary);
+  font-weight: var(--font-weight-medium);
+  cursor: default;
+}

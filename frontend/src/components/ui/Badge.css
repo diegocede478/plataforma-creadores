@@ -1,0 +1,102 @@
+/* ========================================
+   Creata - Badge Styles
+   ======================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+/* Sizes */
+.badge--sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+  height: 20px;
+}
+
+.badge--md {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+  height: 24px;
+}
+
+.badge--lg {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-base);
+  height: 32px;
+}
+
+/* Variants */
+.badge--default {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+}
+
+.badge--primary {
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge--secondary {
+  background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-700) 100%);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge--success {
+  background: linear-gradient(135deg, var(--color-success) 0%, #16a34a 100%);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge--warning {
+  background: linear-gradient(135deg, var(--color-warning) 0%, #d97706 100%);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge--error {
+  background: linear-gradient(135deg, var(--color-error) 0%, #dc2626 100%);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge--premium {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  color: #1f1f1f;
+  font-weight: var(--font-weight-bold);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+  animation: premiumPulse 2s ease-in-out infinite;
+}
+
+@keyframes premiumPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(251, 191, 36, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.6); }
+}
+
+/* Dot indicator */
+.badge--dot {
+  padding-left: var(--space-2);
+}
+
+.badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.badge--sm .badge__dot { width: 4px; height: 4px; }
+.badge--lg .badge__dot { width: 8px; height: 8px; }
+
+.badge__content {
+  display: flex;
+  align-items: center;
+}
