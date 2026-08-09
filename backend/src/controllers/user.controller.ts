@@ -5,7 +5,7 @@ import { getParam } from '../utils/params';
 export const getUserProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     const username = getParam(req.params.username);
-    const requesterId = req.user?.userId;
+    const requesterId = req.user?.id;
 
     const user = await userService.getUserByUsername(username, requesterId);
 
@@ -37,7 +37,7 @@ export const searchUsers = async (req: Request, res: Response): Promise<void> =>
 
 export const updateProfile = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -57,7 +57,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
 
 export const getMyStats = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });

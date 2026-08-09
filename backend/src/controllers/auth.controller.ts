@@ -42,7 +42,7 @@ export const logout = async (_req: Request, res: Response): Promise<void> => {
 
 export const changePassword = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -75,7 +75,7 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
 
 export const getMe = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });

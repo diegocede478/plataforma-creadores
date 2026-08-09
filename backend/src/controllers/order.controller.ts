@@ -4,7 +4,7 @@ import { getParam } from '../utils/params';
 
 export const createOrder = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -24,7 +24,7 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
 
 export const getMyOrders = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -42,7 +42,7 @@ export const getMyOrders = async (req: Request, res: Response): Promise<void> =>
 
 export const getMySales = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -61,7 +61,7 @@ export const getMySales = async (req: Request, res: Response): Promise<void> => 
 export const updateOrderStatus = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = getParam(req.params.id);
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });

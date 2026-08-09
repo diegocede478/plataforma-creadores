@@ -3,7 +3,7 @@ import * as walletService from '../services/wallet.service';
 
 export const getWallet = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -21,7 +21,7 @@ export const getWallet = async (req: Request, res: Response): Promise<void> => {
 
 export const deposit = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -41,7 +41,7 @@ export const deposit = async (req: Request, res: Response): Promise<void> => {
 
 export const withdraw = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -61,7 +61,7 @@ export const withdraw = async (req: Request, res: Response): Promise<void> => {
 
 export const getTransactions = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });

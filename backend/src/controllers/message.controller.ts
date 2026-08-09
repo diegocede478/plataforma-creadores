@@ -4,7 +4,7 @@ import { getParam } from '../utils/params';
 
 export const sendMessage = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -24,7 +24,7 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
 
 export const sendPaidMessage = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -44,7 +44,7 @@ export const sendPaidMessage = async (req: Request, res: Response): Promise<void
 
 export const unlockMessage = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -64,7 +64,7 @@ export const unlockMessage = async (req: Request, res: Response): Promise<void> 
 
 export const getConversation = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -86,7 +86,7 @@ export const getConversation = async (req: Request, res: Response): Promise<void
 
 export const getConversations = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -104,7 +104,7 @@ export const getConversations = async (req: Request, res: Response): Promise<voi
 
 export const getUnreadCount = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });

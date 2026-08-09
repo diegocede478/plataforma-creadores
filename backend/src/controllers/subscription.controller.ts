@@ -4,7 +4,7 @@ import { getParam } from '../utils/params';
 
 export const subscribeToCreator = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -24,7 +24,7 @@ export const subscribeToCreator = async (req: Request, res: Response): Promise<v
 
 export const cancelSubscription = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -44,7 +44,7 @@ export const cancelSubscription = async (req: Request, res: Response): Promise<v
 
 export const getMySubscriptions = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -62,7 +62,7 @@ export const getMySubscriptions = async (req: Request, res: Response): Promise<v
 
 export const getMySubscribers = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -80,7 +80,7 @@ export const getMySubscribers = async (req: Request, res: Response): Promise<voi
 
 export const getSubscriptionStatus = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });

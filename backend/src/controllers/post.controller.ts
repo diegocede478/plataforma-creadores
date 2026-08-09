@@ -4,7 +4,7 @@ import { getParam } from '../utils/params';
 
 export const createPost = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -31,7 +31,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 export const getPostsByCreator = async (req: Request, res: Response): Promise<void> => {
   try {
     const creatorId = getParam(req.params.creatorId);
-    const requesterId = req.user?.userId;
+    const requesterId = req.user?.id;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
@@ -46,7 +46,7 @@ export const getPostsByCreator = async (req: Request, res: Response): Promise<vo
 
 export const getMyPosts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -67,7 +67,7 @@ export const getMyPosts = async (req: Request, res: Response): Promise<void> => 
 
 export const getFeedPosts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -89,7 +89,7 @@ export const getFeedPosts = async (req: Request, res: Response): Promise<void> =
 export const getPostById = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = getParam(req.params.id);
-    const requesterId = req.user?.userId;
+    const requesterId = req.user?.id;
 
     const post = await postService.getPostById(id, requesterId);
 
@@ -103,7 +103,7 @@ export const getPostById = async (req: Request, res: Response): Promise<void> =>
 export const updatePost = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = getParam(req.params.id);
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -124,7 +124,7 @@ export const updatePost = async (req: Request, res: Response): Promise<void> => 
 export const deletePost = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = getParam(req.params.id);
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
@@ -143,7 +143,7 @@ export const deletePost = async (req: Request, res: Response): Promise<void> => 
 export const unlockPremiumPost = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = getParam(req.params.id);
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
 
     if (!userId) {
       res.status(401).json({ error: 'Usuario no autenticado' });
