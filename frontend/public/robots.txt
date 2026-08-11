@@ -9,4 +9,4 @@ Disallow: /dashboard/*
 Disallow: /messages
 Disallow: /settings
 
-Sitemap: https://creata.up.railway.app/sitemap.xml
+Sitemap: https://plataforma-creadores-production.up.railway.app/sitemap.xml
