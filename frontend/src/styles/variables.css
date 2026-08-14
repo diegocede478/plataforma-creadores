@@ -1,45 +1,40 @@
 /* ========================================
-   Creata - Design System Variables
-   Dark Mode + Glassmorphism Premium
+   Creata - Design System Variables (Premium Refined)
    ======================================== */
 
 :root {
-  /* === Color Palette === */
-  /* Primary - Electric Purple */
-  --color-primary-50: #f5f0ff;
-  --color-primary-100: #e9d8fd;
-  --color-primary-200: #d6bcfa;
-  --color-primary-300: #b888f3;
-  --color-primary-400: #a25ce8;
-  --color-primary-500: #9333ea;
-  --color-primary-600: #7e22ce;
-  --color-primary-700: #6b21a8;
-  --color-primary-800: #581c87;
-  --color-primary-900: #4c1d95;
+  /* === Color Palette - Single Accent (Electric Blue) === */
+  /* Neutral bases - Zinc/Slate, desaturated */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
 
-  /* Secondary - Hot Pink */
-  --color-secondary-50: #fdf2f8;
-  --color-secondary-100: #fce7f3;
-  --color-secondary-200: #fbcfe8;
-  --color-secondary-300: #f9a8d4;
-  --color-secondary-400: #f472b6;
-  --color-secondary-500: #ec4899;
-  --color-secondary-600: #db2777;
-  --color-secondary-700: #be185d;
-  --color-secondary-800: #9d174d;
-  --color-secondary-900: #831843;
+  /* Single Accent - Electric Blue (desaturated, <80% saturation) */
+  --color-accent-50: #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
 
-  /* Accent - Cyan */
-  --color-accent-50: #ecfeff;
-  --color-accent-100: #cffafe;
-  --color-accent-200: #a5f3fc;
-  --color-accent-300: #67e8f9;
-  --color-accent-400: #22d3ee;
-  --color-accent-500: #06b6d4;
-  --color-accent-600: #0891b2;
-  --color-accent-700: #0e7490;
-  --color-accent-800: #155e75;
-  --color-accent-900: #164e63;
+  /* Secondary Accent - Violet (subtle, for hover states only) */
+  --color-accent2-500: #8b5cf6;
+  --color-accent2-600: #7c3aed;
+
+  /* Tertiary Accent - Cyan (micro-interactions only) */
+  --color-accent3-500: #06b6d4;
 
   /* Semantic Colors */
   --color-success: #22c55e;
@@ -59,13 +54,15 @@
   --bg-hover: #1e1e2a;
   --bg-active: #252533;
 
-  /* Glassmorphism */
+  /* Liquid Glass - Real refraction with inner border */
   --glass-bg: rgba(22, 22, 31, 0.7);
   --glass-bg-strong: rgba(22, 22, 31, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-strong: rgba(255, 255, 255, 0.15);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --glass-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-border-inner: rgba(255, 255, 255, 0.12);
+  --glass-border-strong: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --glass-shadow-strong: 0 20px 48px rgba(0, 0, 0, 0.45);
+  --glass-shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
   /* Text */
   --text-primary: #fafafa;
@@ -75,29 +72,25 @@
   --text-inverse: #0a0a0f;
 
   /* Borders */
-  --border-primary: rgba(255, 255, 255, 0.1);
-  --border-secondary: rgba(255, 255, 255, 0.06);
-  --border-focus: var(--color-primary-400);
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.04);
+  --border-focus: var(--color-accent-500);
 
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
-  --gradient-primary-hover: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-secondary-400) 100%);
-  --gradient-accent: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-primary-500) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-  --gradient-mesh: radial-gradient(ellipse at 20% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
-                   radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-                   radial-gradient(ellipse at 40% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+  /* Gradients - Subtle, single accent */
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-500) 0%, var(--color-accent2-500) 100%);
+  --gradient-accent-hover: linear-gradient(135deg, var(--color-accent-400) 0%, var(--color-accent2-400) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --gradient-mesh: radial-gradient(ellipse at 15% 15%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                   radial-gradient(ellipse at 85% 85%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 24px rgba(147, 51, 234, 0.3);
-  --shadow-glow-pink: 0 0 24px rgba(236, 72, 153, 0.25);
-  --shadow-glow-cyan: 0 0 24px rgba(6, 182, 212, 0.25);
+  /* Shadows - Tinted to background hue */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 24px 56px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.15);
 
-  /* Border Radius */
+  /* Border Radius - Rounded-2xl for premium feel */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -105,11 +98,11 @@
   --radius-2xl: 32px;
   --radius-full: 9999px;
 
-  /* Transitions */
+  /* Transitions - Spring physics for premium feel */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
-  --transition-spring: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-spring: 400ms cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Z-Index */
   --z-dropdown: 100;
@@ -133,9 +126,10 @@
   --space-12: 48px;
   --space-16: 64px;
   --space-20: 80px;
+  --space-24: 96px;
 
-  /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Typography - Geist/Outfit stack (not Inter) */
+  --font-sans: 'Outfit', 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   --font-size-xs: 0.7rem;
@@ -147,14 +141,15 @@
   --font-size-3xl: 2rem;
   --font-size-4xl: 2.5rem;
   --font-size-5xl: 3.5rem;
+  --font-size-6xl: 5rem;
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-tight: 1.1;
-  --line-height-snug: 1.375;
+  --line-height-tight: 1.05;
+  --line-height-snug: 1.25;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
 
@@ -184,18 +179,19 @@
   --text-3xl: var(--font-size-3xl);
   --text-4xl: var(--font-size-4xl);
   --text-5xl: var(--font-size-5xl);
+  --text-6xl: var(--font-size-6xl);
 
   /* === Color Aliases (semantic) === */
   --color-danger: var(--color-error);
   --color-danger-light: var(--color-error-light);
-  --color-primary: var(--color-primary-500);
-  --color-primary-hover: var(--color-primary-400);
-  --color-secondary: var(--color-secondary-500);
+  --color-primary: var(--color-accent-500);
+  --color-primary-hover: var(--color-accent-400);
+  --color-secondary: var(--color-accent2-500);
   --color-accent: var(--color-accent-500);
-  --bg-danger: rgba(239, 68, 68, 0.12);
-  --bg-success: rgba(34, 197, 94, 0.12);
-  --bg-warning: rgba(245, 158, 11, 0.12);
-  --bg-info: rgba(59, 130, 246, 0.12);
+  --bg-danger: rgba(239, 68, 68, 0.1);
+  --bg-success: rgba(34, 197, 94, 0.1);
+  --bg-warning: rgba(245, 158, 11, 0.1);
+  --bg-info: rgba(59, 130, 246, 0.1);
 }
 
 /* Light mode (optional, for future) */
@@ -210,10 +206,12 @@
 
     --glass-bg: rgba(255, 255, 255, 0.7);
     --glass-bg-strong: rgba(255, 255, 255, 0.85);
-    --glass-border: rgba(0, 0, 0, 0.08);
-    --glass-border-strong: rgba(0, 0, 0, 0.12);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glass-border-inner: rgba(0, 0, 0, 0.1);
+    --glass-border-strong: rgba(0, 0, 0, 0.1);
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    --glass-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.12);
+    --glass-shadow-strong: 0 20px 48px rgba(0, 0, 0, 0.12);
+    --glass-shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
     --text-primary: #18181b;
     --text-secondary: #52525b;
@@ -221,8 +219,11 @@
     --text-muted: #a1a1aa;
     --text-inverse: #fafafa;
 
-    --border-primary: rgba(0, 0, 0, 0.1);
-    --border-secondary: rgba(0, 0, 0, 0.06);
+    --border-primary: rgba(0, 0, 0, 0.08);
+    --border-secondary: rgba(0, 0, 0, 0.04);
+
+    --gradient-mesh: radial-gradient(ellipse at 15% 15%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                     radial-gradient(ellipse at 85% 85%, rgba(139, 92, 246, 0.04) 0%, transparent 50%);
   }
 }
 
@@ -234,4 +235,21 @@
     --transition-slow: 0ms;
     --transition-spring: 0ms;
   }
+}
+
+/* Font loading - Outfit variable font */
+@font-face {
+  font-family: 'Outfit';
+  src: url('https://fonts.gstatic.com/s/outfit/v13/QGYsz_wNahGAdqQ43RhVcIgY.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('https://fonts.gstatic.com/s/geist/v3/rnCuzRF7VtH7m9A.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
 }

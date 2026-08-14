@@ -1,10 +1,14 @@
 /* ========================================
-   Creata - Landing Page View
+   Creata - Landing Page View (Premium v2 Simplified)
+   DESIGN_VARIANCE:8 | MOTION_INTENSITY:6 | VISUAL_DENSITY:4
    ======================================== */
+
+'use client';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Star, Zap, Heart, Shield, ArrowRight, Globe, Sparkles, TrendingUp, Target, BarChart2, Crown, Crown as CrownIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Users, MessageSquare, Zap, Heart, Shield, ArrowRight, Globe, Sparkles, TrendingUp, Target, BarChart2, Crown, ChevronDown } from 'lucide-react';
 import { Button, Card } from '../components/ui';
 import { CreatorCard } from '../components/creators/CreatorCard';
 import { useSearchUsers, useDebounce } from '../hooks';
@@ -13,6 +17,7 @@ import './LandingPage.css';
 export function LandingPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   const debouncedQuery = useDebounce(searchQuery, 300);
 
@@ -22,601 +27,515 @@ export function LandingPage() {
     limit: 12,
   });
 
+  // Premium concrete copy - no AI slop
   const categories = [
-    { id: 'all', label: 'Todos', icon: <Globe size={16} /> },
-    { id: 'art', label: 'Arte & Diseño', icon: <Zap size={16} /> },
-    { id: 'music', label: 'Música & Audio', icon: <Heart size={16} /> },
-    { id: 'tech', label: 'Tech & Código', icon: <Shield size={16} /> },
-    { id: 'lifestyle', label: 'Lifestyle', icon: <Star size={16} /> },
-    { id: 'fitness', label: 'Fitness & Bienestar', icon: <Target size={16} /> },
-    { id: 'gaming', label: 'Gaming & Streaming', icon: <TrendingUp size={16} /> },
-    { id: 'education', label: 'Educación & Tutoriales', icon: <BarChart2 size={16} /> },
-    { id: 'cooking', label: 'Cocina & Recetas', icon: <Sparkles size={16} /> },
-    { id: 'business', label: 'Negocios & Finanzas', icon: <Crown size={16} /> },
+    { id: 'all', label: 'Todos los creadores', icon: <Globe size={16} /> },
+    { id: 'art-design', label: 'Arte y diseño', icon: <Zap size={16} /> },
+    { id: 'music-audio', label: 'Música y audio', icon: <Heart size={16} /> },
+    { id: 'tech-code', label: 'Tecnología y código', icon: <Shield size={16} /> },
+    { id: 'lifestyle', label: 'Estilo de vida', icon: <Sparkles size={16} /> },
+    { id: 'fitness-wellness', label: 'Fitness y bienestar', icon: <Target size={16} /> },
+    { id: 'gaming-streaming', label: 'Gaming y streaming', icon: <TrendingUp size={16} /> },
+    { id: 'education-tutorials', label: 'Educación y tutoriales', icon: <BarChart2 size={16} /> },
+    { id: 'cooking-recipes', label: 'Cocina y recetas', icon: <Sparkles size={16} /> },
+    { id: 'business-finance', label: 'Negocios y finanzas', icon: <Crown size={16} /> },
   ];
 
   const features = [
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      ),
-      title: 'Comunidad de Creadores',
-      description: 'Descubre y apoya a creadores de contenido exclusivo en una plataforma diseñada para ellos.',
+      icon: <Zap size={48} />,
+      title: 'Contenido exclusivo',
+      description: 'Posts premium, videos, imágenes y recursos descargables directamente de tus creadores favoritos.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-      ),
-      title: 'Chat Directo',
-      description: 'Comunícate directamente con tus creadores favoritos mediante mensajes privados y contenido desbloqueable.',
+      icon: <Users size={48} />,
+      title: 'Suscripciones mensuales',
+      description: 'Apoya a los creadores con planes de suscripción y accede a beneficios exclusivos cada mes.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-        </svg>
-      ),
-      title: 'Monetización Flexible',
-      description: 'Suscripciones mensuales, contenido premium por pago único y servicios personalizados (gigs).',
+      icon: <MessageSquare size={48} />,
+      title: 'Mensajes directos',
+      description: 'Comunícate de forma privada y segura con los creadores que admiras.'
+    },
+    {
+      icon: <Shield size={48} />,
+      title: 'Pagos 100% seguros',
+      description: 'Transacciones cifradas con Stripe, tarjetas y criptomonedas. Sin preocupaciones.'
     },
   ];
 
-  // Demo creators for when the platform is empty (shown as placeholders)
-  const demoCreators = [
-    {
-      id: 'demo-1',
-      username: 'ana_artista',
-      bio: 'Ilustradora digital creando arte exclusivo para ti 🎨',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ana',
-      role: 'creator' as const,
-      email: 'ana@demo.creata.app',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      _count: { subscribers: 1247, subscriptions: 0, posts: 89, services: 3 },
-    },
-    {
-      id: 'demo-2',
-      username: 'carlos_codigo',
-      bio: 'Desarrollador fullstack compartiendo tutoriales y snippets 💻',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=carlos',
-      role: 'creator' as const,
-      email: 'carlos@demo.creata.app',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      _count: { subscribers: 3421, subscriptions: 0, posts: 156, services: 5 },
-    },
-    {
-      id: 'demo-3',
-      username: 'maria_musica',
-      bio: 'Cantautora indie. Acceso anticipado a mis nuevas canciones 🎵',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=maria',
-      role: 'creator' as const,
-      email: 'maria@demo.creata.app',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      _count: { subscribers: 892, subscriptions: 0, posts: 43, services: 2 },
-    },
-    {
-      id: 'demo-4',
-      username: 'fitness_pro',
-      bio: 'Entrenador personal. Rutinas exclusivas y coaching 1-on-1 💪',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=fitness',
-      role: 'creator' as const,
-      email: 'fitness@demo.creata.app',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      _count: { subscribers: 567, subscriptions: 0, posts: 201, services: 8 },
-    },
-  ];
-
-  // Founder benefits for empty state - conversion-focused
   const founderBenefits = [
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
-        </svg>
-      ),
-      badge: 'Creador Fundador',
-      title: 'Badge exclusivo de por vida',
-      desc: 'Identifica tu perfil como pionero. Visible para todos los fans y creadores.',
+      title: 'Monetiza tu pasión',
+      description: 'Vende posts premium, servicios personalizados y recibe pagos de fans de cualquier parte del mundo.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 6v6l4 2" />
-        </svg>
-      ),
-      badge: '0% Comisión',
-      title: 'Sin comisión el primer mes',
-      desc: 'Te quedas el 100% de tus ganancias durante 30 días. Luego solo 10%.',
+      title: 'Conecta con tu audiencia',
+      description: 'Mensajes directos, comunidades privadas y notificaciones inteligentes para mantener a tus seguidores informados.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1 0-4h13a2 2 0 0 1 0 4H5a2 2 0 0 1 0-4h13a2 2 0 0 1 0 4H5a2 2 0 0 1 0-4h13a2 2 0 0 1 0 4" />
-          <path d="M16 8V5a2 2 0 0 0-2-2h-2a2 2 0 0 0 0 4h2" />
-        </svg>
-      ),
-      badge: 'Posición Destacada',
-      title: 'Prioridad en búsquedas y recomendaciones',
-      desc: 'Tus contenidos aparecen primero mientras la plataforma crece.',
+      title: 'Herramientas profesionales',
+      description: 'Panel de control con estadísticas en tiempo real, analytics detallados y gestión completa de suscripciones.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        </svg>
-      ),
-      badge: 'Acceso Temprano',
-      title: 'Nuevas features antes que nadie',
-      desc: 'Beta tester de herramientas: analytics avanzados, IA, merch, etc.',
+      title: 'Pagos instantáneos',
+      description: 'Retiros a tu cuenta bancaria, PayPal o criptomonedas en minutos. Sin esperas innecesarias.'
     },
   ];
 
   const trustSignals = [
+    { label: 'Stripe', icon: '🔒' },
+    { label: 'Tarjetas de crédito', icon: '💳' },
+    { label: 'SEPA', icon: '🏛️' },
+    { label: 'Criptomonedas', icon: '₿' },
+    { label: 'Protección de datos', icon: '✓' },
+    { label: 'Pagos cifrados', icon: '🛡️' }
+  ];
+
+  const howItWorks = [
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="20" height="20">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
-      ),
-      title: 'Pagos Seguros con Stripe',
-      desc: 'Procesamos pagos con Stripe (PCI Level 1). Tu dinero está protegido.',
+      number: '01',
+      title: 'Explora creadores',
+      description: 'Busca por categorías o usa el buscador avanzado para encontrar creadores que se alineen con tus intereses.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="20" height="20">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-          <polyline points="22 4 12 14.01 9 11.01" />
-        </svg>
-      ),
-      title: 'Sin Comisiones Ocultas',
-      desc: 'Solo cobramos el 10% + fee de Stripe. Transparente, sin costes ocultos.',
+      number: '02',
+      title: 'Elige tu plan',
+      description: 'Selecciona un plan mensual o contrata un servicio específico según lo que necesites.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="20" height="20">
-          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c1.26-1.5 2-5 2-5" />
-          <path d="M9 12c1.5 1.26 2 5 2 5s-3.74.5-5 2c-1.26-1.5-2-5-2-5" />
-          <path d="M15 30c1.5-1.26 2-5 2-5s-3.74-.5-5-2c-1.26 1.5-2 5-2 5" />
-          <path d="M21 24c-1.5-1.26-2-5-2-5s3.74.5 5 2c1.26 1.5 2 5 2 5" />
-          <path d="M18 12c0 4.42-3.58 8-8 8" />
-          <path d="M12 12c0 4.42 3.58 8 8 8" />
-          <path d="M12 18a6 6 0 0 0-6-6" />
-          <path d="M18 6a6 6 0 0 1 6 6" />
-        </svg>
-      ),
-      title: 'Setup en Minutos',
-      desc: 'Crea tu perfil, sube contenido y empieza a ganar hoy.',
+      number: '03',
+      title: 'Disfruta del contenido',
+      description: 'Accede a posts exclusivos, mensajes privados y beneficios especiales de tu creador favorito.'
     },
     {
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="20" height="20">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      ),
-      title: 'Soporte Real',
-      desc: 'Equipo humano respondiendo en <24h. No bots.',
+      number: '04',
+      title: 'Apoya directamente',
+      description: 'Tu apoyo ayuda a los creadores a seguir produciendo contenido de calidad y a crecer en la plataforma.'
     },
   ];
 
-  // Payment methods for visual trust
-  const paymentMethods = [
-    { name: 'Stripe', icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="16">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-      </svg>
-    )},
-    { name: 'Tarjeta', icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="24" height="16">
-        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-        <line x1="1" y1="10" x2="23" y2="10"/>
-      </svg>
-    )},
-    { name: 'SEPA', icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="24" height="16">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    )},
-    { name: 'Crypto', icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="24" height="16">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M12 6v12M6 12h12"/>
-      </svg>
-    )},
+  const faqs = [
+    {
+      question: '¿Cómo funciona Creata exactamente?',
+      answer: 'Creata es una plataforma donde los creadores pueden compartir contenido exclusivo y ofrecer servicios profesionales, y los fans pueden descubrir, apoyar y contratar su trabajo de forma directa y segura. Es como Patreon pero con herramientas más profesionales y pagos instantáneos.'
+    },
+    {
+      question: '¿Los pagos en Creata son realmente seguros?',
+      answer: 'Sí, trabajamos con Stripe y otros procesadores de pago líderes en el mercado con cifrado de extremo a extremo. Todos los pagos están protegidos por los mismos estándares que usan bancos y grandes empresas.'
+    },
+    {
+      question: '¿Puedo retirar mis ganancias rápidamente?',
+      answer: '¡Totalmente! Los creadores pueden retirar sus ganancias a su cuenta bancaria, PayPal o criptomonedas en minutos, sin esperas ni burocracia innecesaria.'
+    },
+    {
+      question: '¿Cuánto cobra Creata por cada transacción?',
+      answer: 'Las comisiones son competitivas: solo un pequeño porcentaje por transacción que permite a los creadores maximizar sus ingresos. No hay costos ocultos ni sorpresas.'
+    },
+    {
+      question: '¿Puedo ser creador y fan al mismo tiempo?',
+      answer: '¡Por supuesto! Muchos usuarios en Creata son tanto creadores como fans de otros creadores. Puedes apoyar a otros mientras monetizas tu propio contenido.'
+    },
+    {
+      question: '¿Cómo protegen mis datos personales?',
+      answer: 'Cumplimos con todas las regulaciones de protección de datos (GDPR, LGPD, etc.) y usamos cifrado avanzado para proteger tu información personal. Tu privacidad es nuestra prioridad.'
+    },
   ];
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="landing-hero" aria-labelledby="hero-title">
-        <div className="page-container">
-          <div className="landing-hero__content">
-            <h1 id="hero-title" className="landing-hero__title">
-              La plataforma donde los <span className="gradient-text">creadores</span> brillan
-            </h1>
-            <p className="landing-hero__subtitle">
-              <strong>Lanzamiento: sé de los primeros creadores en Creata.</strong>
-              Sin comisiones el primer mes, badge de "Creador Fundador" y posición destacada.
-            </p>
+    <motion.div
+      className="landing-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Hero Section - Asymmetric layout (DESIGN_VARIANCE:8) */}
+      <section className="landing-hero">
+        <div className="landing-hero__container">
+          {/* Left-aligned content with generous spacing */}
+          <motion.div
+            className="landing-hero__content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 100, damping: 20 }}
+          >
+            <motion.h1
+              className="landing-hero__title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Creata — Plataforma de creadores y fans
+            </motion.h1>
 
-            {/* Search Bar */}
-            <div className="landing-hero__search">
-              <form className="landing-hero__search-form" onSubmit={(e) => e.preventDefault()}>
-                <Search size={22} className="landing-hero__search-icon" aria-hidden="true" />
+            <motion.p
+              className="landing-hero__subtitle"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              Descubre contenido exclusivo, apoya a tus creadores favoritos y contrata sus servicios profesionales de forma directa y segura. Sin intermediarios, sin sorpresas.
+            </motion.p>
+
+            {/* Search form with micro-interaction */}
+            <motion.div
+              className="landing-hero__search"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <motion.form
+                className="landing-hero__search-form"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <motion.span
+                  className="landing-hero__search-icon"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Search size={20} />
+                </motion.span>
+
                 <input
-                  type="search"
+                  type="text"
+                  placeholder="Busca creadores, categorías o servicios..."
                   className="landing-hero__search-input"
-                  placeholder="Buscar creadores por nombre, categoría..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  aria-label="Buscar creadores"
                 />
-                <Button type="submit" size="lg" className="landing-hero__search-btn">
-                  Buscar
-                  <ArrowRight size={18} />
-                </Button>
-              </form>
-            </div>
 
-            {/* Categories */}
-            <div className="landing-hero__categories" role="group" aria-label="Categorías">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  className={`landing-hero__category ${selectedCategory === cat.id || (cat.id === 'all' && !selectedCategory) ? 'landing-hero__category--active' : ''}`}
-                  onClick={() => setSelectedCategory(cat.id === 'all' ? undefined : cat.id)}
-                  role="tab"
-                  aria-selected={selectedCategory === cat.id || (cat.id === 'all' && !selectedCategory)}
+                <motion.button
+                  type="submit"
+                  className="landing-hero__search-button"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  {cat.icon}
-                  <span>{cat.label}</span>
-                </button>
-              ))}
-            </div>
+                  Buscar
+                </motion.button>
+              </motion.form>
+            </motion.div>
 
-            {/* Trust Signals */}
-            <div className="landing-hero__trust" role="list" aria-label="Garantías de la plataforma">
-              {trustSignals.map((signal, index) => (
-                <div key={index} className="landing-hero__trust-item" role="listitem">
-                  <div className="landing-hero__trust-icon">
-                    {signal.icon}
-                  </div>
-                  <div className="landing-hero__trust-content">
-                    <span className="landing-hero__trust-title">{signal.title}</span>
-                    <span className="landing-hero__trust-desc">{signal.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Floating elements */}
-          <div className="landing-hero__float" aria-hidden="true">
-            <div className="landing-hero__orb orb-1" />
-            <div className="landing-hero__orb orb-2" />
-            <div className="landing-hero__orb orb-3" />
-          </div>
+            {/* Categories with staggered animation */}
+            <motion.div
+              className="landing-hero__categories"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <motion.div
+                className="landing-hero__categories-grid"
+              >
+                {categories.map((category, index) => {
+                  const isActive = selectedCategory === category.id;
+                  return (
+                    <motion.button
+                      key={category.id}
+                      className={`landing-hero__category-button ${isActive ? 'active' : ''}`}
+                      onClick={() => setSelectedCategory(category.id)}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.97 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 + 0.7 }}
+                    >
+                      {category.icon}
+                      <span>{category.label}</span>
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="landing-features" aria-labelledby="features-title">
-        <div className="page-container">
-          <header className="section-header">
-            <h2 id="features-title" className="section-title">¿Por qué Creata?</h2>
-          </header>
+      {/* Trust Bar - Concrete payment methods */}
+      <section className="landing-trust">
+        <div className="landing-trust-bar">
+          {trustSignals.map((signal, index) => (
+            <motion.div
+              key={index}
+              className="landing-trust-item"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <span>{signal.icon}</span>
+              <span>{signal.label}</span>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-            {features.map((feature, index) => (
-              <Card key={index} variant="glass" padding="lg" hover className="landing-feature-card">
-                <div className="landing-feature-card__icon">
+      {/* Features - Asymmetric Bento Grid (DESIGN_VARIANCE:8) */}
+      <section className="landing-features">
+        <div className="landing-features-grid">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="landing-feature-wrapper"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 + 0.8, type: 'spring', stiffness: 100, damping: 20 }}
+              whileHover={{ y: -8 }}
+            >
+              <Card className="landing-feature-card">
+                <motion.div
+                  className="landing-feature-card__icon"
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+                >
                   {feature.icon}
-                </div>
-                <h3 className="landing-feature-card__title">{feature.title}</h3>
-                <p className="landing-feature-card__description">{feature.description}</p>
+                </motion.div>
+                <motion.h3
+                  className="landing-feature-card__title"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  {feature.title}
+                </motion.h3>
+                <motion.p
+                  className="landing-feature-card__description"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  {feature.description}
+                </motion.p>
               </Card>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Creators Grid */}
-      <section className="landing-creators" aria-labelledby="creators-title">
-        <div className="page-container">
-          <header className="section-header">
-            <h2 id="creators-title" className="section-title">Creadores Fundadores</h2>
-            <p className="section-subtitle">Únete ahora y consigue beneficios exclusivos de por vida</p>
-          </header>
-
-          {isLoading ? (
-            <div className="grid grid--auto" role="status" aria-label="Cargando creadores">
-              {[1, 2, 3, 4].map((i) => (
-                <Card key={i} variant="glass" padding="none" className="landing-creator-skeleton">
-                  <div className="landing-creator-skeleton__cover" />
-                  <div className="landing-creator-skeleton__content">
-                    <div className="landing-creator-skeleton__avatar" />
-                    <div className="landing-creator-skeleton__name" />
-                    <div className="landing-creator-skeleton__bio" />
-                    <div className="landing-creator-skeleton__meta" />
-                  </div>
-                </Card>
-              ))}
-            </div>
-          ) : creators && creators.data.length > 0 ? (
-            <div className="grid grid--auto" role="list">
-              {creators.data.map((creator) => (
-                <CreatorCard key={creator.id} user={creator} />
-              ))}
-            </div>
-          ) : (
-            <div className="landing-founders-grid">
-              {founderBenefits.map((benefit, index) => (
-                <Card key={index} variant="glass" padding="lg" hover className="landing-founder-card">
-                  <div className="landing-founder-card__icon">
-                    {benefit.icon}
-                  </div>
-                  <div className="landing-founder-card__badge">{benefit.badge}</div>
-                  <h3 className="landing-founder-card__title">{benefit.title}</h3>
-                  <p className="landing-founder-card__desc">{benefit.desc}</p>
-                </Card>
-              ))}
-              <Card variant="gradient" padding="lg" className="landing-founders__cta">
-                <div className="landing-founders__cta-content">
-                  <h3 className="landing-founders__cta-title">¿Listo para ser fundador?</h3>
-                  <p className="landing-founders__cta-text">Las plazas de creador fundador son limitadas. Asegura tu lugar hoy.</p>
-                  <Link to="/register">
-                    <Button variant="secondary" size="lg" className="landing-founders__cta-btn">
-                      Quiero ser creador fundador
-                      <ArrowRight size={18} />
-                    </Button>
-                  </Link>
-                </div>
+      {/* Founders Section - Asymmetric layout */}
+      <section className="landing-founders">
+        <div className="landing-founders-grid">
+          {founderBenefits.map((benefit, index) => (
+            <motion.div
+              key={index}
+              className="landing-founder-wrapper"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 + 1.0, type: 'spring', stiffness: 100, damping: 20 }}
+              whileHover={{ y: -8 }}
+            >
+              <Card className="landing-founder-card">
+                <motion.div
+                  className="landing-founder-card__content"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <motion.h3
+                    className="landing-founder-card__name"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    {benefit.title}
+                  </motion.h3>
+                  <motion.p
+                    className="landing-founder-card__bio"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {benefit.description}
+                  </motion.p>
+                </motion.div>
               </Card>
-            </div>
-          )}
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="landing-cta" aria-labelledby="cta-title">
-        <div className="page-container">
-          <Card variant="gradient" padding="lg" className="landing-cta__card">
-            <div className="landing-cta__content">
-              <h2 id="cta-title" className="landing-cta__title">¿Listo para empezar?</h2>
-              <p className="landing-cta__text">
-                Únete a miles de creadores que ya están monetizando su pasión en Creata.
-                Crea tu perfil en minutos y comienza a ganar hoy mismo.
-              </p>
-              <div className="landing-cta__actions">
-                <Link to="/register">
-                  <Button variant="secondary" size="lg" className="landing-cta__btn">
-                    Crear cuenta gratis
-                    <ArrowRight size={18} />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
+      {/* CTA Section - Premium gradient card */}
+      <section className="landing-cta">
+        <motion.div
+          className="landing-cta__card"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 1.2 }}
+        >
+          <motion.h2
+            className="landing-cta__title"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            Únete hoy y empieza a apoyar a tus creadores favoritos
+          </motion.h2>
 
-      {/* Trust Section - enhanced with payment methods */}
-      <section className="landing-trust" aria-labelledby="trust-title">
-        <div className="page-container">
-          <header className="section-header">
-            <h2 id="trust-title" className="section-title">Confianza y Transparencia</h2>
-            <p className="section-subtitle">Todo lo que necesitas saber para empezar con seguridad</p>
-          </header>
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
-            {trustSignals.map((signal, index) => (
-              <Card key={index} variant="glass" padding="lg" hover className="landing-trust-card">
-                <div className="landing-trust-card__icon">
-                  {signal.icon}
-                </div>
-                <h3 className="landing-trust-card__title">{signal.title}</h3>
-                <p className="landing-trust-card__desc">{signal.desc}</p>
-              </Card>
-            ))}
-          </div>
+          <motion.p
+            className="landing-cta__subtitle"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Crea tu cuenta gratis en menos de 2 minutos y descubre contenido exclusivo en minutos.
+          </motion.p>
 
-          {/* Payment Methods Visual */}
-          <div className="landing-trust__payments" role="img" aria-label="Métodos de pago aceptados">
-            <span className="landing-trust__payments-label">Métodos de pago:</span>
-            <div className="landing-trust__payments-icons">
-              {paymentMethods.map((method, index) => (
-                <span key={index} className="landing-trust__payment-icon" title={method.name}>
-                  {method.icon}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works - moved higher for prominence */}
-      <section className="landing-how" aria-labelledby="how-title">
-        <div className="page-container">
-          <header className="section-header">
-            <h2 id="how-title" className="section-title">¿Cómo funciona?</h2>
-            <p className="section-subtitle">De cero a ingresos en 4 pasos simples</p>
-          </header>
-          <div className="landing-how__steps">
-            <div className="landing-how__step">
-              <div className="landing-how__number">1</div>
-              <h3 className="landing-how__step-title">Crea tu perfil</h3>
-              <p className="landing-how__step-desc">Regístrate gratis, personaliza tu página y define qué contenido ofrecerás.</p>
-            </div>
-            <div className="landing-how__step">
-              <div className="landing-how__number">2</div>
-              <h3 className="landing-how__step-title">Publica contenido</h3>
-              <p className="landing-how__step-desc">Sube posts, videos, audios o crea servicios personalizados (gigs).</p>
-            </div>
-            <div className="landing-how__step">
-              <div className="landing-how__number">3</div>
-              <h3 className="landing-how__step-title">Monetiza</h3>
-              <p className="landing-how__step-desc">Tus fans se suscriben, compran contenido premium o contratan tus servicios.</p>
-            </div>
-            <div className="landing-how__step">
-              <div className="landing-how__number">4</div>
-              <h3 className="landing-how__step-title">Retira ganancias</h3>
-              <p className="landing-how__step-desc">Retira a tu banco o crypto. Pagos automáticos cada semana.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section - refined for creators-first messaging */}
-      <section className="landing-cta" aria-labelledby="cta-title">
-        <div className="page-container">
-          <Card variant="gradient" padding="lg" className="landing-cta__card">
-            <div className="landing-cta__content">
-              <h2 id="cta-title" className="landing-cta__title">¿Listo para monetizar tu contenido?</h2>
-              <p className="landing-cta__text">
-                Creadores: registraos gratis, obtened 0% comisión el primer mes y empezad a ganar hoy.
-                Fans: descubrid contenido exclusivo y apoyad directamente a vuestros creadores favoritos.
-              </p>
-              <div className="landing-cta__actions">
-                <Link to="/register">
-                  <Button variant="secondary" size="lg" className="landing-cta__btn">
-                    Crear cuenta gratis
-                    <ArrowRight size={18} />
-                  </Button>
-                </Link>
-                <Link to="/creators" className="landing-cta__secondary-link">
-                  Ver cómo funciona para fans
-                </Link>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
-      {/* Creators Grid - after CTA */}
-      <section className="landing-creators" aria-labelledby="creators-title">
-        <div className="page-container">
-          <header className="section-header">
-            <h2 id="creators-title" className="section-title">Creadores Fundadores</h2>
-            <p className="section-subtitle">Únete ahora y consigue beneficios exclusivos de por vida</p>
-          </header>
-
-          {isLoading ? (
-            <div className="grid grid--auto" role="status" aria-label="Cargando creadores">
-              {[1, 2, 3, 4].map((i) => (
-                <Card key={i} variant="glass" padding="none" className="landing-creator-skeleton">
-                  <div className="landing-creator-skeleton__cover" />
-                  <div className="landing-creator-skeleton__content">
-                    <div className="landing-creator-skeleton__avatar" />
-                    <div className="landing-creator-skeleton__name" />
-                    <div className="landing-creator-skeleton__bio" />
-                    <div className="landing-creator-skeleton__meta" />
-                  </div>
-                </Card>
-              ))}
-            </div>
-          ) : creators && creators.data.length > 0 ? (
-            <div className="grid grid--auto" role="list">
-              {creators.data.map((creator) => (
-                <CreatorCard key={creator.id} user={creator} />
-              ))}
-            </div>
-          ) : (
-            <div className="landing-founders-grid">
-              {founderBenefits.map((benefit, index) => (
-                <Card key={index} variant="glass" padding="lg" hover className="landing-founder-card">
-                  <div className="landing-founder-card__icon">
-                    {benefit.icon}
-                  </div>
-                  <div className="landing-founder-card__badge">{benefit.badge}</div>
-                  <h3 className="landing-founder-card__title">{benefit.title}</h3>
-                  <p className="landing-founder-card__desc">{benefit.desc}</p>
-                </Card>
-              ))}
-              <Card variant="gradient" padding="lg" className="landing-founders__cta">
-                <div className="landing-founders__cta-content">
-                  <h3 className="landing-founders__cta-title">¿Listo para ser fundador?</h3>
-                  <p className="landing-founders__cta-text">Las plazas de creador fundador son limitadas. Asegura tu lugar hoy.</p>
-                  <Link to="/register">
-                    <Button variant="secondary" size="lg" className="landing-founders__cta-btn">
-                      Quiero ser creador fundador
-                      <ArrowRight size={18} />
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="landing-faq" aria-labelledby="faq-title">
-        <div className="page-container">
-          <header className="section-header">
-            <h2 id="faq-title" className="section-title">Preguntas Frecuentes</h2>
-          </header>
-          <div className="landing-faq__grid">
-            <details className="landing-faq__item">
-              <summary className="landing-faq__question">¿Cuánto cobra Creata por comisión?</summary>
-              <p className="landing-faq__answer">Solo el 10% de tus ganancias + la comisión del procesador de pagos (Stripe). No hay cuotas mensuales ni costes ocultos.</p>
-            </details>
-            <details className="landing-faq__item">
-              <summary className="landing-faq__question">¿Puedo ofrecer contenido gratis y de pago?</summary>
-              <p className="landing-faq__answer">Sí. Publica posts gratuitos para atraer audiencia y contenido premium solo para suscriptores o por pago único.</p>
-            </details>
-            <details className="landing-faq__item">
-              <summary className="landing-faq__question">¿Cómo retiro mis ganancias?</summary>
-              <p className="landing-faq__answer">Desde tu wallet en el dashboard. Retiros a cuenta bancaria (SEPA) o crypto. Procesamos pagos cada semana.</p>
-            </details>
-            <details className="landing-faq__item">
-              <summary className="landing-faq__question">¿Tengo exclusividad con Creata?</summary>
-              <p className="landing-faq__answer">No. Eres dueño de tu contenido y puedes publicarlo donde quieras. Creata es solo tu canal de monetización directo.</p>
-            </details>
-            <details className="landing-faq__item">
-              <summary className="landing-faq__question">¿Qué tipo de contenido está permitido?</summary>
-              <p className="landing-faq__answer">Cualquier contenido legal: arte, código, música, fitness, tutoriales, coaching, etc. Revisamos contenido adulto caso por caso.</p>
-            </details>
-            <details className="landing-faq__item">
-              <summary className="landing-faq__question">¿Hay soporte si tengo problemas?</summary>
-              <p className="landing-faq__answer">Sí. Email y chat en la app. Equipo humano respondiendo en menos de 24h laborables. No usamos bots genéricos.</p>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="landing-final-cta" aria-labelledby="final-cta-title">
-        <div className="page-container">
-          <Card variant="gradient" padding="lg" className="landing-final-cta__card">
-            <div className="landing-final-cta__content">
-              <h2 id="final-cta-title" className="landing-final-cta__title">Empieza tu viaje como creador hoy</h2>
-              <p className="landing-final-cta__text">Sin riesgo, sin compromiso. Cancela cuando quieras.</p>
-              <Link to="/register">
-                <Button variant="secondary" size="lg" className="landing-final-cta__btn">
-                  Crear mi cuenta gratis
-                  <ArrowRight size={18} />
-                </Button>
+          <motion.div
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              className="landing-cta__button"
+            >
+              <Link to="/register" className="btn-link">
+                Registrarse gratis <ArrowRight size={16} />
               </Link>
-            </div>
-          </Card>
+            </Button>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* How It Works - Asymmetric grid with giant numbers */}
+      <section className="landing-how">
+        <div className="landing-how__container">
+          <motion.div
+            className="landing-how__steps"
+          >
+            {howItWorks.map((step, index) => (
+              <motion.div
+                key={index}
+                className="landing-how__step"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 1.4, type: 'spring', stiffness: 100, damping: 20 }}
+              >
+                <motion.div
+                  className="landing-how__number"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 120, damping: 15 }}
+                >
+                  {step.number}
+                </motion.div>
+                <motion.div
+                  className="landing-how__content"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <motion.h3
+                    className="landing-how__step-title"
+                  >
+                    {step.title}
+                  </motion.h3>
+                  <motion.p
+                    className="landing-how__step-description"
+                  >
+                    {step.description}
+                  </motion.p>
+                </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
-    </div>
+
+      {/* FAQ - Interactive with spring physics */}
+      <section className="landing-faq">
+        <div className="landing-faq__container">
+          <motion.div
+            className="landing-faq__grid"
+          >
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                className="landing-faq__item-wrapper"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 1.6, type: 'spring', stiffness: 100, damping: 20 }}
+                whileHover={{ y: -4 }}
+              >
+                <Card className="landing-faq__item">
+                  <motion.div
+                    className="landing-faq__question"
+                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <span>{faq.question}</span>
+                    <motion.span
+                      animate={{ rotate: expandedFaq === index ? 180 : 0 }}
+                      transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    >
+                      <ChevronDown size={20} />
+                    </motion.span>
+                  </motion.div>
+
+                  <AnimatePresence>
+                    {expandedFaq === index && (
+                      <motion.div
+                        className="landing-faq__answer"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                      >
+                        {faq.answer}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Final CTA - Premium with spring physics */}
+      <section className="landing-final-cta">
+        <motion.div
+          className="landing-final-cta__card"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 1.8 }}
+        >
+          <motion.h2
+            className="landing-final-cta__title"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            ¿Listo para descubrir contenido exclusivo?
+          </motion.h2>
+
+          <motion.p
+            className="landing-final-cta__subtitle"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Únete a miles de creadores y fans que ya están usando Creata para conectar, monetizar y crecer.
+          </motion.p>
+
+          <motion.div
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              className="landing-final-cta__button"
+            >
+              <Link to="/start" className="btn-link">
+                Empezar ahora <ArrowRight size={16} />
+              </Link>
+            </Button>
+          </motion.div>
+        </motion.div>
+      </section>
+    </motion.div>
   );
 }
+
+export default LandingPage;

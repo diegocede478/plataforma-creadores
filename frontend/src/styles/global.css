@@ -1,5 +1,5 @@
 /* ========================================
-   Creata - Global Styles & Reset
+   Creata - Global Styles & Reset (Premium)
    ======================================== */
 
 @import './variables.css';
@@ -28,7 +28,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Background mesh gradient */
+/* Background mesh gradient - subtle, fixed, pointer-events-none */
 body::before {
   content: '';
   position: fixed;
@@ -40,7 +40,7 @@ body::before {
 
 /* Selection */
 ::selection {
-  background: var(--color-primary-500);
+  background: var(--color-accent-500);
   color: var(--text-inverse);
 }
 
@@ -155,12 +155,13 @@ img, video {
 .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-/* Glassmorphism utilities */
+/* Liquid Glass - Real refraction with inner border */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inner);
 }
 
 .glass-strong {
@@ -168,6 +169,7 @@ img, video {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-strong), var(--glass-shadow-inner);
 }
 
 .glass-card {
@@ -176,7 +178,7 @@ img, video {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inner);
 }
 
 .glass-card-strong {
@@ -185,17 +187,12 @@ img, video {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border-strong);
   border-radius: var(--radius-xl);
-  box-shadow: var(--glass-shadow-strong);
+  box-shadow: var(--glass-shadow-strong), var(--glass-shadow-inner);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* Gradient text - reserved for accent elements only (badges, small UI) */
+/* Avoid on headlines - use solid colors for text hierarchy */
+/* impeccable-disable gradient-text */
 .gradient-text-accent {
   background: var(--gradient-accent);
   -webkit-background-clip: text;
@@ -203,7 +200,7 @@ img, video {
   background-clip: text;
 }
 
-/* Animations */
+/* Animations - Spring physics */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -256,12 +253,34 @@ img, video {
   100% { background-position: 200% 0; }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: var(--shadow-glow); }
+  50% { box-shadow: 0 0 48px rgba(59, 130, 246, 0.25); }
+}
+
 .animate-fade-in { animation: fadeIn var(--transition-base) ease-out; }
-.animate-slide-up { animation: slideUp var(--transition-slow) ease-out; }
-.animate-slide-down { animation: slideDown var(--transition-slow) ease-out; }
-.animate-scale-in { animation: scaleIn var(--transition-base) ease-out; }
+.animate-slide-up { animation: slideUp var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-slide-down { animation: slideDown var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-scale-in { animation: scaleIn var(--transition-base) cubic-bezier(0.16, 1, 0.3, 1); }
 .animate-spin { animation: spin 1s linear infinite; }
 .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-glow-pulse { animation: glowPulse 3s ease-in-out infinite; }
+
+/* Stagger delays */
+.stagger-1 { animation-delay: calc(var(--stagger-index, 1) * 100ms); }
+.stagger-2 { animation-delay: calc(var(--stagger-index, 2) * 100ms); }
+.stagger-3 { animation-delay: calc(var(--stagger-index, 3) * 100ms); }
+.stagger-4 { animation-delay: calc(var(--stagger-index, 4) * 100ms); }
+.stagger-5 { animation-delay: calc(var(--stagger-index, 5) * 100ms); }
+.stagger-6 { animation-delay: calc(var(--stagger-index, 6) * 100ms); }
+.stagger-7 { animation-delay: calc(var(--stagger-index, 7) * 100ms); }
+.stagger-8 { animation-delay: calc(var(--stagger-index, 8) * 100ms); }
 
 /* Transitions */
 .transition-fast { transition: all var(--transition-fast); }
@@ -269,7 +288,7 @@ img, video {
 .transition-slow { transition: all var(--transition-slow); }
 .transition-spring { transition: all var(--transition-spring); }
 
-/* Hover effects */
+/* Hover effects - tactile feedback */
 .hover-lift:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
@@ -277,6 +296,10 @@ img, video {
 
 .hover-scale:hover {
   transform: scale(1.02);
+}
+
+.hover-scale:active {
+  transform: scale(0.98);
 }
 
 .hover-glow:hover {
@@ -307,4 +330,68 @@ img, video {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Premium button base styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-spring);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: white;
+  padding: var(--space-3) var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background: var(--gradient-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  padding: var(--space-3) var(--space-6);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-accent-500);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-4);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-size-lg);
+}
+
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
 }
